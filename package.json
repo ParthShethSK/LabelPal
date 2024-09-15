@@ -1,5 +1,5 @@
 {
-  "name": "myvision",
+  "name": "labelpal",
   "version": "1.0.0",
   "description": "This is an image labelling tool for generating computer vision training data on the web.",
   "main": "index.js",
@@ -26,12 +26,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OvidijusParsiunas/myvision.git"
+    "url": "git+https://github.com/ParthShethSK/LabelPal.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/OvidijusParsiunas/myvision/issues"
+    "url": "https://github.com/ParthShethSK/LabelPal/issues"
   },
-  "homepage": "https://github.com/OvidijusParsiunas/myvision#readme"
+  "homepage": "https://github.com/ParthShethSK/LabelPal#readme"
 }

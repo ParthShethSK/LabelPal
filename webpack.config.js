@@ -1,34 +1,35 @@
-const FailOnErrorsPlugin = require('fail-on-errors-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CNAMEWebpackPlugin = require('cname-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
-const path = require('path');
+const FailOnErrorsPlugin = require("fail-on-errors-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const CNAMEWebpackPlugin = require("cname-webpack-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
+const path = require("path");
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || "development";
 
 module.exports = () => {
   let plugins = [];
   let config = {};
-  if (env === 'production') {
+  if (env === "production") {
     config = {
-      loggingLevel: 'normal',
-      outputDirectory: 'tempDeployFolder',
-      outputFileName: '[name].[contenthash].js',
-      externalsFileExtension: '.min.js',
-      externalsDirectory: 'externalsProd',
+      loggingLevel: "normal",
+      outputDirectory: "tempDeployFolder",
+      outputFileName: "[name].[contenthash].js",
+      externalsFileExtension: ".min.js",
+      externalsDirectory: "externalsProd",
     };
     plugins = plugins.concat([
       new CNAMEWebpackPlugin({
-        domain: 'myvision.ai',
-      })]);
+        domain: "labelpal.ai",
+      }),
+    ]);
   } else {
     config = {
       loggingLevel: { assets: false, modules: false, children: false },
-      outputDirectory: 'publicDev',
-      outputFileName: '[name].js',
-      externalsFileExtension: '.js',
-      externalsDirectory: 'externalsDev',
+      outputDirectory: "publicDev",
+      outputFileName: "[name].js",
+      externalsFileExtension: ".js",
+      externalsDirectory: "externalsDev",
     };
   }
   plugins = plugins.concat([
@@ -38,30 +39,33 @@ module.exports = () => {
     }),
     new HtmlWebpackPlugin({
       externalsFileExtension: config.externalsFileExtension,
-      template: 'src/devIndexTemplate.html',
+      template: "src/devIndexTemplate.html",
       minify: false,
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: './src/assets/css', to: 'assets/css' },
-        { from: './src/assets/images', to: 'assets/images' },
-        { from: './src/assets/svg', to: 'assets/svg' },
-        { from: `./src/assets/externals/${config.externalsDirectory}`, to: 'assets/externals' },
+        { from: "./src/assets/css", to: "assets/css" },
+        { from: "./src/assets/images", to: "assets/images" },
+        { from: "./src/assets/svg", to: "assets/svg" },
+        {
+          from: `./src/assets/externals/${config.externalsDirectory}`,
+          to: "assets/externals",
+        },
       ],
     }),
     new ESLintPlugin({}),
   ]);
   return {
     entry: {
-      browserSupportBundle: './src/browserSupport/index.js',
-      appBundle: './src/app/index.js',
+      browserSupportBundle: "./src/browserSupport/index.js",
+      appBundle: "./src/app/index.js",
     },
     output: {
       filename: config.outputFileName,
       path: path.resolve(__dirname, `./${config.outputDirectory}`),
     },
     externals: {
-      fabric: 'fabric',
+      fabric: "fabric",
     },
     module: {
       rules: [
@@ -70,9 +74,9 @@ module.exports = () => {
           exclude: /node_modules/,
           use: [
             {
-              loader: 'babel-loader',
+              loader: "babel-loader",
               options: {
-                presets: ['@babel/preset-env'],
+                presets: ["@babel/preset-env"],
               },
             },
           ],
